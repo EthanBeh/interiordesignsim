@@ -15,7 +15,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private JButton kitch;
     private JButton bath;
     private JButton bed;
-    private JButton[] kitchenButtons;
+    private JButton[][] mainButtons;
     private int scene;
 
     public GraphicsPanel() {
@@ -40,15 +40,28 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             System.out.println(e.getMessage());
         }
         scene = 0;
-        kitch = new JButton("design kitchen");
-        kitch.addActionListener(this);
-        add(kitch);
-        bath = new JButton("design bathroom");
-        add(bath);
-        bath.addActionListener(this);
-        bed = new JButton("design bedroom");
-        add(bed);
-        bed.addActionListener(this);
+        mainButtons = new JButton[4][3];
+        mainButtons[0][0] = new JButton("design kitchen"); //row means what screen it's on, 0,1,2,3, column is which button it is
+        mainButtons[0][1] = new JButton("design bathroom");
+        mainButtons[0][2] = new JButton("design bedroom");
+        mainButtons[1][0] = new JButton("AAH"); //kitchen's buttons
+        mainButtons[1][1] = new JButton("BBH");
+        mainButtons[1][2] = new JButton("CCH");
+        mainButtons[2][0] = new JButton("DDH"); //kitchen's buttons
+        mainButtons[2][1] = new JButton("EEH");
+        mainButtons[2][2] = new JButton("FFH");
+        mainButtons[3][0] = new JButton("GGH"); //kitchen's buttons
+        mainButtons[3][1] = new JButton("IIH");
+        mainButtons[3][2] = new JButton("JJH");
+        for (JButton[] row : mainButtons) {
+            for (JButton b : row) {
+                b.addActionListener(this);
+            }
+        }
+        for (JButton b : mainButtons[0]) {
+            add(b);
+        }
+
     }
 
     public void paintComponent(Graphics g) {
@@ -64,28 +77,17 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             int stringy = (540 - metrics.getHeight()) / 2 + metrics.getAscent();
             g.drawString(toPrint, (960 - metrics.stringWidth(toPrint)) / 2, (540 - metrics.getHeight()) / 2 + metrics.getAscent());
             //end of adapted code
-            kitch.setLocation(480 - 150, 50 + stringy);
-            bath.setLocation(480, 50 + stringy);
-            bed.setLocation(480 + 150, 50 + stringy);
+            mainButtons[0][0].setLocation(480 - 150, 50 + stringy);
+            mainButtons[0][1].setLocation(480, 50 + stringy);
+            mainButtons[0][2].setLocation(480 + 150, 50 + stringy);
         } else if (scene == 1) { //scene 1 means kitchen
-
+            g.drawImage(kitchen, 0, 0, null);
         } else if (scene == 2) { //scene 2 means bathroom
-
+            g.drawImage(bathroom, 0, 0, null);
         } else if (scene == 3) { //scene 3 means bedroom
-
+            g.drawImage(bedroom, 0, 0, null);
         }
     }
-
-/*
-        kitchenButtons = new JButton[3];
-        kitchenButtons[0] = new JButton("AAH");
-        kitchenButtons[1] = new JButton("BBH");
-        kitchenButtons[2] = new JButton("CCH");
-        for (JButton b : kitchenButtons) {
-            add(b);
-            b.addActionListener(this);
-        }
-*/
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -127,24 +129,24 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     }
 
-    private void removeStartingButtons() {
-        kitch.setVisible(false);
-        bed.setVisible(false);
-        bath.setVisible(false);
+    private void removeButtonRow(int row) {
+        for (JButton b : mainButtons[row]){
+            b.setVisible(false);
+        }
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof JButton && e.getSource() == kitch) {
+        if (e.getSource() instanceof JButton && e.getSource() == mainButtons[0][0]) {
             scene = 1;
-            removeStartingButtons();
+            removeButtonRow(0);
             requestFocusInWindow();
-        } else if (e.getSource() instanceof JButton && e.getSource() == bath) {
+        } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[0][1]) {
             scene = 2;
-            removeStartingButtons();
+            removeButtonRow(0);
             requestFocusInWindow();
-        } else if (e.getSource() instanceof JButton && e.getSource() == bed) {
+        } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[0][2]) {
             scene = 3;
-            removeStartingButtons();
+            removeButtonRow(0);
             requestFocusInWindow();
         }
     }
