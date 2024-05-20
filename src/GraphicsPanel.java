@@ -17,6 +17,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private JButton bed;
     private JButton[][] mainButtons;
     private int scene;
+    private Layout thisLayout;
 
     public GraphicsPanel() {
         try {
@@ -40,13 +41,14 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             System.out.println(e.getMessage());
         }
         scene = 0;
-        mainButtons = new JButton[4][3];
+        mainButtons = new JButton[4][4];
         mainButtons[0][0] = new JButton("design kitchen"); //row means what screen it's on, 0,1,2,3, column is which button it is
         mainButtons[0][1] = new JButton("design bathroom");
         mainButtons[0][2] = new JButton("design bedroom");
-        mainButtons[1][0] = new JButton("AAH"); //kitchen's buttons
-        mainButtons[1][1] = new JButton("BBH");
-        mainButtons[1][2] = new JButton("CCH");
+        mainButtons[1][0] = new JButton("add cabinet"); //kitchen's buttons
+        mainButtons[1][1] = new JButton("add sink");
+        mainButtons[1][2] = new JButton("add stove");
+        mainButtons[1][3] = new JButton("add fridge");
         mainButtons[2][0] = new JButton("DDH"); //kitchen's buttons
         mainButtons[2][1] = new JButton("EEH");
         mainButtons[2][2] = new JButton("FFH");
@@ -55,13 +57,17 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         mainButtons[3][2] = new JButton("JJH");
         for (JButton[] row : mainButtons) {
             for (JButton b : row) {
-                b.addActionListener(this);
+                if (b != null) {
+                    b.addActionListener(this);
+                }
             }
         }
         for (JButton b : mainButtons[0]) {
-            add(b);
+            if (b != null) {
+                add(b);
+            }
         }
-
+        thisLayout = null;
     }
 
     public void paintComponent(Graphics g) {
@@ -81,10 +87,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             mainButtons[0][1].setLocation(480, 50 + stringy);
             mainButtons[0][2].setLocation(480 + 150, 50 + stringy);
         } else if (scene == 1) { //scene 1 means kitchen
+            thisLayout = new Kitchen();
             g.drawImage(kitchen, 0, 0, null);
         } else if (scene == 2) { //scene 2 means bathroom
+            thisLayout = new Bathroom();
             g.drawImage(bathroom, 0, 0, null);
         } else if (scene == 3) { //scene 3 means bedroom
+            thisLayout = new Bedroom();
             g.drawImage(bedroom, 0, 0, null);
         }
     }
@@ -130,10 +139,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     }
 
     private void removeButtonRow(int row) {
-        for (JButton b : mainButtons[row]){
-            b.setVisible(false);
+        for (JButton b : mainButtons[row]) {
+            if (b != null) {
+                b.setVisible(false);
+            }
         }
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JButton && e.getSource() == mainButtons[0][0]) {
