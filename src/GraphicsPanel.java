@@ -72,7 +72,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (scene == 0) { //scene 0 means welcome screen
+        if (thisLayout == null) { //scene 0 means welcome screen
             g.drawImage(astral, 0, 0, null);
             //code adapted from https://stackoverflow.com/a/27740330
             Font f = new Font("Courier New", Font.BOLD, 24);
@@ -86,13 +86,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             mainButtons[0][0].setLocation(480 - 150, 50 + stringy);
             mainButtons[0][1].setLocation(480, 50 + stringy);
             mainButtons[0][2].setLocation(480 + 150, 50 + stringy);
-        } else if (scene == 1) { //scene 1 means kitchen
+        } else if (thisLayout instanceof Kitchen) { //scene 1 means kitchen
             thisLayout = new Kitchen();
             g.drawImage(kitchen, 0, 0, null);
-        } else if (scene == 2) { //scene 2 means bathroom
+        } else if (thisLayout instanceof Bathroom) { //scene 2 means bathroom
             thisLayout = new Bathroom();
             g.drawImage(bathroom, 0, 0, null);
-        } else if (scene == 3) { //scene 3 means bedroom
+        } else if (thisLayout instanceof Bedroom) { //scene 3 means bedroom
             thisLayout = new Bedroom();
             g.drawImage(bedroom, 0, 0, null);
         }
@@ -149,15 +149,15 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JButton && e.getSource() == mainButtons[0][0]) {
-            scene = 1;
+            thisLayout = new Kitchen();
             removeButtonRow(0);
             requestFocusInWindow();
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[0][1]) {
-            scene = 2;
+            thisLayout = new Bathroom();
             removeButtonRow(0);
             requestFocusInWindow();
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[0][2]) {
-            scene = 3;
+            thisLayout = new Bedroom();
             removeButtonRow(0);
             requestFocusInWindow();
         }
