@@ -17,7 +17,8 @@ public class Layout {
     }
 
     public void addItem(String path, int width, int height, Item.Type type) {
-        items.add(new Item(path, width, height, type));
+        Item i = new Item(path, width, height, type);
+        items.add(i);
     }
 
     public ArrayList<Item> getItems() {

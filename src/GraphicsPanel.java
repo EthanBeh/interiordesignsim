@@ -87,7 +87,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             mainButtons[0][1].setLocation(480, 50 + stringy);
             mainButtons[0][2].setLocation(480 + 150, 50 + stringy);
         } else if (thisLayout instanceof Kitchen) {
-            thisLayout = new Kitchen();
             g.drawImage(kitchen, 0, 0, null);
             for (int i = 0; i < thisLayout.getItems().size(); i++) {
                 g.drawImage(thisLayout.getItems().get(i).getImage(), thisLayout.getItems().get(i).getX(), thisLayout.getItems().get(i).getY(), null);
@@ -97,10 +96,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             mainButtons[1][2].setLocation(15, 85);
             mainButtons[1][3].setLocation(15, 120);
         } else if (thisLayout instanceof Bathroom) {
-            thisLayout = new Bathroom();
             g.drawImage(bathroom, 0, 0, null);
         } else if (thisLayout instanceof Bedroom) {
-            thisLayout = new Bedroom();
             g.drawImage(bedroom, 0, 0, null);
         }
     }
