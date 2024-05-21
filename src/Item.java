@@ -9,8 +9,9 @@ public class Item {
     private int yCoord;
     private int imgWidth;
     private int imgHeight;
+    private Type t;
 
-    public Item(String path, int imgWidth, int imgHeight) {
+    public Item(String path, int imgWidth, int imgHeight, Type type) {
         try {
             itemImage = ImageIO.read(new File(path));
         } catch (IOException e) {
@@ -20,6 +21,7 @@ public class Item {
         this.imgHeight = imgHeight;
         xCoord = 480 - imgWidth / 2;
         yCoord = 290 - imgHeight / 2;
+        t = type;
     }
 
     public BufferedImage getImage() {
@@ -52,5 +54,17 @@ public class Item {
         if (xCoord > 960 - imgWidth / 2) {
             xCoord = 960 - imgWidth / 2;
         }
+    }
+
+    public int getX() {
+        return xCoord;
+    }
+
+    public int getY() {
+        return yCoord;
+    }
+
+    public enum Type {
+        CABINET, SINK, STOVE, FRIDGE
     }
 }

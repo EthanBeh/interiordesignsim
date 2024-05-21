@@ -16,7 +16,11 @@ public class Layout {
         }
     }
 
-    public void addItem(String path, int width, int height) {
-        items.add(new Item(path, width, height));
+    public void addItem(String path, int width, int height, Item.Type type) {
+        items.add(new Item(path, width, height, type));
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
     }
 }
