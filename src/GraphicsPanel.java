@@ -49,9 +49,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         mainButtons[1][1] = new JButton("add sink");
         mainButtons[1][2] = new JButton("add stove");
         mainButtons[1][3] = new JButton("add fridge");
-        mainButtons[2][0] = new JButton("DDH"); //bathroom's buttons
-        mainButtons[2][1] = new JButton("EEH");
-        mainButtons[2][2] = new JButton("FFH");
+        mainButtons[2][0] = new JButton("add bed"); //bathroom's buttons
+        mainButtons[2][1] = new JButton("add closet");
+        mainButtons[2][2] = new JButton("add drawer");
+        mainButtons[2][3] = new JButton("add mirror");
         mainButtons[3][0] = new JButton("GGH"); //bedroom's buttons
         mainButtons[3][1] = new JButton("IIH");
         mainButtons[3][2] = new JButton("JJH");
@@ -97,8 +98,22 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             mainButtons[1][3].setLocation(15, 120);
         } else if (thisLayout instanceof Bathroom) {
             g.drawImage(bathroom, 0, 0, null);
+            for (int i = 0; i < thisLayout.getItems().size(); i++) {
+                g.drawImage(thisLayout.getItems().get(i).getImage(), thisLayout.getItems().get(i).getX(), thisLayout.getItems().get(i).getY(), null);
+            }
+            mainButtons[1][0].setLocation(15, 15);
+            mainButtons[1][1].setLocation(15, 50);
+            mainButtons[1][2].setLocation(15, 85);
+            mainButtons[1][3].setLocation(15, 120);
         } else if (thisLayout instanceof Bedroom) {
             g.drawImage(bedroom, 0, 0, null);
+            for (int i = 0; i < thisLayout.getItems().size(); i++) {
+                g.drawImage(thisLayout.getItems().get(i).getImage(), thisLayout.getItems().get(i).getX(), thisLayout.getItems().get(i).getY(), null);
+            }
+            mainButtons[1][0].setLocation(15, 15);
+            mainButtons[1][1].setLocation(15, 50);
+            mainButtons[1][2].setLocation(15, 85);
+            mainButtons[1][3].setLocation(15, 120);
         }
     }
 
@@ -178,11 +193,19 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[1][0]) {
             thisLayout.addItem("src/Images/kitchencabinet.png", 225, 225, Item.Type.CABINET);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[1][1]) {
-            thisLayout.addItem("src/Images/kitchensink.png", 309, 163, Item.Type.SINK);
+            thisLayout.addItem("src/Images/kitchensink.png", 309, 163, Item.Type.KITCHENSINK);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[1][2]) {
-            thisLayout.addItem("src/Images/stove.png", 220, 229, Item.Type.STOVE);
+            thisLayout.addItem("src/Images/kitchenstove.png", 220, 229, Item.Type.STOVE);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[1][3]) {
-            thisLayout.addItem("src/Images/fridge.png", 225, 225, Item.Type.FRIDGE);
+            thisLayout.addItem("src/Images/kitchenfridge.png", 225, 225, Item.Type.FRIDGE);
+        } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][0]) {
+            thisLayout.addItem("src/Images/bedroombed.png", 225, 225, Item.Type.CABINET);
+        } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][1]) {
+            thisLayout.addItem("src/Images/bedroomcloset.png", 309, 163, Item.Type.KITCHENSINK);
+        } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][2]) {
+            thisLayout.addItem("src/Images/bedroomdrawer.png", 220, 229, Item.Type.STOVE);
+        } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][3]) {
+            thisLayout.addItem("src/Images/bedroommirror.png", 225, 225, Item.Type.FRIDGE);
         }
     }
 }

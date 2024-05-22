@@ -65,6 +65,8 @@ public class Item {
     }
 
     public enum Type {
-        CABINET, SINK, STOVE, FRIDGE
+        CABINET, KITCHENSINK, STOVE, FRIDGE,
+        BED, BEDROOMMIRROR, DRAWER, CLOSET,
+        TOILET, SHOWER, BATHROOMSINK, BATHROOMMIRROR //add mirror and sink too
     }
 }
