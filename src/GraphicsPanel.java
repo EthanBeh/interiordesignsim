@@ -49,10 +49,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         mainButtons[1][1] = new JButton("add sink");
         mainButtons[1][2] = new JButton("add stove");
         mainButtons[1][3] = new JButton("add fridge");
-        mainButtons[2][0] = new JButton("empty"); //bathroom's buttons
-        mainButtons[2][1] = new JButton("empty");
-        mainButtons[2][2] = new JButton("empty");
-        mainButtons[2][3] = new JButton("empty");
+        mainButtons[2][0] = new JButton("add mirror"); //bathroom's buttons
+        mainButtons[2][1] = new JButton("add shower");
+        mainButtons[2][2] = new JButton("add sink");
+        mainButtons[2][3] = new JButton("add toilet");
         mainButtons[3][0] = new JButton("add bed"); //bedroom's buttons
         mainButtons[3][1] = new JButton("add closet");
         mainButtons[3][2] = new JButton("add drawer");
@@ -135,7 +135,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
@@ -145,7 +144,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        //this isn't getting called fsr
+        if (e.getButton() == MouseEvent.BUTTON1 && thisLayout != null) {
+            thisLayout.identifyItem(MouseInfo.getPointerInfo().getLocation());
+        }
     }
 
     @Override
@@ -207,6 +209,14 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             thisLayout.addItem("src/Images/bedroomdrawer.png", 200, 200, Item.Type.DRAWER);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[3][3]) {
             thisLayout.addItem("src/Images/bedroommirror.png", 225, 225, Item.Type.BEDROOMMIRROR);
+        } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][0]) {
+            thisLayout.addItem("src/Images/bathroommirror.png", 200, 200, Item.Type.BATHROOMMIRROR);
+        } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][1]) {
+            thisLayout.addItem("src/Images/bathroomshower.png", 250, 168, Item.Type.SHOWER);
+        } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][2]) {
+            thisLayout.addItem("src/Images/bathroomsink.png", 225, 225, Item.Type.BATHROOMSINK);
+        } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][3]) {
+            thisLayout.addItem("src/Images/bathroomtoilet.png", 225, 225, Item.Type.TOILET);
         }
     }
 }

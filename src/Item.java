@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -62,6 +63,10 @@ public class Item {
 
     public int getY() {
         return yCoord;
+    }
+
+    public Rectangle getRect() {
+        return new Rectangle(xCoord, yCoord, imgWidth, imgHeight);
     }
 
     public enum Type {
