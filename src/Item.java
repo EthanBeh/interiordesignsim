@@ -25,6 +25,10 @@ public class Item {
         t = type;
     }
 
+    public Type getType() {
+        return t;
+    }
+
     public BufferedImage getImage() {
         return itemImage;
     }

@@ -18,6 +18,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private JButton[][] mainButtons;
     private int scene;
     private Layout thisLayout;
+    private Point containerLocation;
+    private boolean[] keys; //0 = W, 1 = A, 2 = S, 3 = D
 
     public GraphicsPanel() {
         try {
@@ -70,10 +72,15 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             removeButtonRow(i);
         }
         thisLayout = null;
+        addMouseListener(this);
+        setFocusable(true);
+        requestFocusInWindow();
+        containerLocation = null;
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        //containerLocation = g.getLocationOnScreen();
         if (thisLayout == null) { //scene 0 means welcome screen
             g.drawImage(astral, 0, 0, null);
             //code adapted from https://stackoverflow.com/a/27740330
@@ -134,19 +141,16 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-    }
+    public void mouseClicked(MouseEvent e) { }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
+    public void mousePressed(MouseEvent e) { }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        //this isn't getting called fsr
         if (e.getButton() == MouseEvent.BUTTON1 && thisLayout != null) {
             thisLayout.identifyItem(MouseInfo.getPointerInfo().getLocation());
+            //so what i gotta do is let the code work no mattter what position the cursor's at on the screen
         }
     }
 
@@ -194,29 +198,29 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             addButtonRow(3);
             requestFocusInWindow();
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[1][0]) {
-            thisLayout.addItem("src/Images/kitchencabinet.png", 225, 225, Item.Type.CABINET);
+            thisLayout.addItem("src/Images/kitchencabinet.png", 169, 173, Item.Type.CABINET);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[1][1]) {
-            thisLayout.addItem("src/Images/kitchensink.png", 309, 163, Item.Type.KITCHENSINK);
+            thisLayout.addItem("src/Images/kitchensink.png", 169, 139, Item.Type.KITCHENSINK);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[1][2]) {
-            thisLayout.addItem("src/Images/kitchenstove.png", 220, 229, Item.Type.STOVE);
+            thisLayout.addItem("src/Images/kitchenstove.png", 175, 229, Item.Type.STOVE);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[1][3]) {
-            thisLayout.addItem("src/Images/kitchenfridge.png", 225, 225, Item.Type.FRIDGE);
+            thisLayout.addItem("src/Images/kitchenfridge.png", 117, 222, Item.Type.FRIDGE);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[3][0]) {
-            thisLayout.addItem("src/Images/bedroombed.png", 250, 250, Item.Type.BED);
+            thisLayout.addItem("src/Images/bedroombed.png", 205, 125, Item.Type.BED);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[3][1]) {
-            thisLayout.addItem("src/Images/bedroomcloset.png", 250, 250, Item.Type.CLOSET);
+            thisLayout.addItem("src/Images/bedroomcloset.png", 104, 238, Item.Type.CLOSET);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[3][2]) {
-            thisLayout.addItem("src/Images/bedroomdrawer.png", 200, 200, Item.Type.DRAWER);
+            thisLayout.addItem("src/Images/bedroomdrawer.png", 143, 136, Item.Type.DRAWER);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[3][3]) {
-            thisLayout.addItem("src/Images/bedroommirror.png", 225, 225, Item.Type.BEDROOMMIRROR);
+            thisLayout.addItem("src/Images/bedroommirror.png", 99, 215, Item.Type.BEDROOMMIRROR);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][0]) {
-            thisLayout.addItem("src/Images/bathroommirror.png", 200, 200, Item.Type.BATHROOMMIRROR);
+            thisLayout.addItem("src/Images/bathroommirror.png", 200, 149, Item.Type.BATHROOMMIRROR);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][1]) {
-            thisLayout.addItem("src/Images/bathroomshower.png", 250, 168, Item.Type.SHOWER);
+            thisLayout.addItem("src/Images/bathroomshower.png", 131, 136, Item.Type.SHOWER);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][2]) {
-            thisLayout.addItem("src/Images/bathroomsink.png", 225, 225, Item.Type.BATHROOMSINK);
+            thisLayout.addItem("src/Images/bathroomsink.png", 107, 166, Item.Type.BATHROOMSINK);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][3]) {
-            thisLayout.addItem("src/Images/bathroomtoilet.png", 225, 225, Item.Type.TOILET);
+            thisLayout.addItem("src/Images/bathroomtoilet.png", 91, 167, Item.Type.TOILET);
         }
     }
 }
