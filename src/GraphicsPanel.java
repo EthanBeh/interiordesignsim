@@ -12,9 +12,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private BufferedImage kitchen;
     private BufferedImage bathroom;
     private BufferedImage bedroom;
-    private JButton kitch;
-    private JButton bath;
-    private JButton bed;
     private JButton[][] mainButtons;
     private int scene;
     private Layout thisLayout;
@@ -73,13 +70,16 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         }
         thisLayout = null;
         addMouseListener(this);
+        addKeyListener(this);
         setFocusable(true);
         requestFocusInWindow();
         containerLocation = null;
+        keys = new boolean[4];
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        int buttonRow = 0;
         //containerLocation = g.getLocationOnScreen();
         if (thisLayout == null) { //scene 0 means welcome screen
             g.drawImage(astral, 0, 0, null);
@@ -97,47 +97,85 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             mainButtons[0][2].setLocation(480 + 150, 50 + stringy);
         } else if (thisLayout instanceof Kitchen) {
             g.drawImage(kitchen, 0, 0, null);
-            for (int i = 0; i < thisLayout.getItems().size(); i++) {
-                g.drawImage(thisLayout.getItems().get(i).getImage(), thisLayout.getItems().get(i).getX(), thisLayout.getItems().get(i).getY(), null);
-            }
-            mainButtons[1][0].setLocation(15, 15);
-            mainButtons[1][1].setLocation(15, 50);
-            mainButtons[1][2].setLocation(15, 85);
-            mainButtons[1][3].setLocation(15, 120);
+            buttonRow = 1;
         } else if (thisLayout instanceof Bathroom) {
             g.drawImage(bathroom, 0, -50, null);
-            for (int i = 0; i < thisLayout.getItems().size(); i++) {
-                g.drawImage(thisLayout.getItems().get(i).getImage(), thisLayout.getItems().get(i).getX(), thisLayout.getItems().get(i).getY(), null);
-            }
-            mainButtons[2][0].setLocation(15, 15);
-            mainButtons[2][1].setLocation(15, 50);
-            mainButtons[2][2].setLocation(15, 85);
-            mainButtons[2][3].setLocation(15, 120);
+            buttonRow = 2;
         } else if (thisLayout instanceof Bedroom) {
             g.drawImage(bedroom, 0, 0, null);
+            buttonRow = 3;
+        }
+        if (thisLayout != null) {
             for (int i = 0; i < thisLayout.getItems().size(); i++) {
                 g.drawImage(thisLayout.getItems().get(i).getImage(), thisLayout.getItems().get(i).getX(), thisLayout.getItems().get(i).getY(), null);
             }
-            mainButtons[3][0].setLocation(15, 15);
-            mainButtons[3][1].setLocation(15, 50);
-            mainButtons[3][2].setLocation(15, 85);
-            mainButtons[3][3].setLocation(15, 120);
+            mainButtons[buttonRow][0].setLocation(15, 15);
+            mainButtons[buttonRow][1].setLocation(15, 50);
+            mainButtons[buttonRow][2].setLocation(15, 85);
+            mainButtons[buttonRow][3].setLocation(15, 120);
+            if (thisLayout.getItems().size() != 0) {
+                Item last = thisLayout.getItems().get(thisLayout.getItems().size() - 1);
+                if (keys[0]) {
+                    System.out.println("kms");
+                    last.moveUp();
+                }
+                if (keys[1]) {
+                    System.out.println("kys");
+                    last.moveLeft();
+                }
+                if (keys[2]) {
+                    System.out.println("khs");
+                    last.moveDown();
+                }
+                if (keys[3]) {
+                    System.out.println("kts");
+                    last.moveRight();
+                }
+            }
         }
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
+    public void keyTyped(KeyEvent e) { }
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        switch (e.getKeyCode()) {
+            case 87: //w
+                keys[0] = true;
+                break;
+            case 65: //a
+                keys[1] = true;
+                break;
+            case 83: //s
+                keys[2] = true;
+                break;
+            case 68: //d
+                keys[3] = true;
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        switch (e.getKeyCode()) {
+            case 87: //w
+                keys[0] = false;
+                break;
+            case 65: //a
+                keys[1] = false;
+                break;
+            case 83: //s
+                keys[2] = false;
+                break;
+            case 68: //d
+                keys[3] = false;
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -216,7 +254,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][0]) {
             thisLayout.addItem("src/Images/bathroommirror.png", 200, 149, Item.Type.BATHROOMMIRROR);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][1]) {
-            thisLayout.addItem("src/Images/bathroomshower.png", 131, 136, Item.Type.SHOWER);
+            thisLayout.addItem("src/Images/bathroomshower.png", 225, 234, Item.Type.SHOWER);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][2]) {
             thisLayout.addItem("src/Images/bathroomsink.png", 107, 166, Item.Type.BATHROOMSINK);
         } else if (e.getSource() instanceof JButton && e.getSource() == mainButtons[2][3]) {

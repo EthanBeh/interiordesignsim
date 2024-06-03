@@ -34,28 +34,28 @@ public class Item {
     }
 
     public void moveUp() {
-        yCoord -= 25;
+        yCoord -= 1;
         if (yCoord < 0) {
             yCoord = 0;
         }
     }
 
     public void moveLeft() {
-        xCoord -= 25;
+        xCoord -= 1;
         if (xCoord < 0) {
             xCoord = 0;
         }
     }
 
     public void moveDown() {
-        yCoord += 25;
+        yCoord += 1;
         if (yCoord > 580 - imgHeight / 2) {
             yCoord = 580 - imgHeight / 2;
         }
     }
 
     public void moveRight() {
-        xCoord += 25;
+        xCoord += 1;
         if (xCoord > 960 - imgWidth / 2) {
             xCoord = 960 - imgWidth / 2;
         }
