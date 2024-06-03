@@ -13,10 +13,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private BufferedImage bathroom;
     private BufferedImage bedroom;
     private JButton[][] mainButtons;
-    private int scene;
     private Layout thisLayout;
-    private Point containerLocation;
     private boolean[] keys; //0 = W, 1 = A, 2 = S, 3 = D
+    private JButton sellToBuyer;
 
     public GraphicsPanel() {
         try {
@@ -39,7 +38,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        scene = 0;
         mainButtons = new JButton[4][4];
         mainButtons[0][0] = new JButton("design kitchen"); //row means what screen it's on, 0,1,2,3, column is which button it is
         mainButtons[0][1] = new JButton("design bathroom");
@@ -68,12 +66,16 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         for (int i = 1; i < mainButtons.length; i++) {
             removeButtonRow(i);
         }
+        sellToBuyer = new JButton("sell to buyer");
+        sellToBuyer.addActionListener(this);
+        add(sellToBuyer);
+        sellToBuyer.setFocusable(false);
+        sellToBuyer.setVisible(false);
         thisLayout = null;
         addMouseListener(this);
         addKeyListener(this);
         setFocusable(true);
         requestFocusInWindow();
-        containerLocation = null;
         keys = new boolean[4];
     }
 
@@ -189,6 +191,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         if (e.getButton() == MouseEvent.BUTTON1 && thisLayout != null) {
             thisLayout.identifyItem(MouseInfo.getPointerInfo().getLocation());
             //so what i gotta do is let the code work no mattter what position the cursor's at on the screen
+        }
+        if (e.getButton() == MouseEvent.BUTTON3 && thisLayout !=  null) {
+            thisLayout.identifyItem(MouseInfo.getPointerInfo().getLocation());
+            thisLayout.deleteTop();
         }
     }
 

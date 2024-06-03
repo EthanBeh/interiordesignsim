@@ -8,12 +8,9 @@ public class Layout {
         recentlyClicked = new ArrayList<Item>();
     }
 
-    public void deleteItem(Item item) {
-        for (int i = 0; i < recentlyClicked.size(); i++) {
-            if (item == recentlyClicked.get(i)) {
-                recentlyClicked.remove(i);
-                i--;
-            }
+    public void deleteTop() {
+        if (recentlyClicked.size() != 0) {
+            recentlyClicked.remove(recentlyClicked.size() - 1);
         }
     }
 
