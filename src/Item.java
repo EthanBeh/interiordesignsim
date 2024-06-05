@@ -10,9 +10,8 @@ public class Item {
     private int yCoord;
     private int imgWidth;
     private int imgHeight;
-    private Type t;
 
-    public Item(String path, int imgWidth, int imgHeight, Type type) {
+    public Item(String path, int imgWidth, int imgHeight) {
         try {
             itemImage = ImageIO.read(new File(path));
         } catch (IOException e) {
@@ -22,11 +21,6 @@ public class Item {
         this.imgHeight = imgHeight;
         xCoord = 480 - imgWidth / 2;
         yCoord = 290 - imgHeight / 2;
-        t = type;
-    }
-
-    public Type getType() {
-        return t;
     }
 
     public BufferedImage getImage() {
@@ -73,9 +67,4 @@ public class Item {
         return new Rectangle(xCoord, yCoord, imgWidth, imgHeight);
     }
 
-    public enum Type {
-        CABINET, KITCHENSINK, STOVE, FRIDGE,
-        BED, BEDROOMMIRROR, DRAWER, CLOSET,
-        TOILET, SHOWER, BATHROOMSINK, BATHROOMMIRROR //add mirror and sink too
-    }
 }

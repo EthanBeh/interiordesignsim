@@ -15,18 +15,16 @@ public class Layout {
     }
 
     public Item identifyItem(Point p) {
-        System.out.println("whomp whomp");
         for (int i = recentlyClicked.size() - 1; i >= 0; i--) {
             if (recentlyClicked.get(i).getRect().contains(p)) {
-                System.out.println("heheheh >:3");
                 recentlyClicked.add(recentlyClicked.remove(i));
                 return recentlyClicked.get(recentlyClicked.size() - 1);
             }
         } return null;
     }
 
-    public void addItem(String path, int width, int height, Item.Type type) {
-        Item i = new Item(path, width, height, type);
+    public void addItem(String path, int width, int height) {
+        Item i = new Item(path, width, height);
         recentlyClicked.add(i);
     }
 
